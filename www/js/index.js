@@ -33,6 +33,7 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+        app.renderHomeView();
         app.receivedEvent('deviceready');
         FastClick.attach(document.body);
         if (navigator.notification) {
@@ -60,5 +61,17 @@ var app = {
     },
     buttonPress: function() {
         alert("Help is on the way....");
+    },
+    renderHomeView: function() {
+        var html =
+            "<div class='app'>" +
+            "<h1>PhoneGap</h1>" +
+            "<div id='deviceready' class='blink'>" +
+            "<p class='event listening'>Connecting to Device</p>" +
+            "<p class='event received'>Device is Ready</p>" +
+            "</div>" +
+            "<button type='button' class='help-button' onclick='app.buttonPress()'>Help</button>" +
+            "</div>";
+        $('body').html(html);
     }
 };
