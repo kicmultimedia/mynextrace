@@ -34,7 +34,7 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-
+        FastClick.attach(document.body);
         if (navigator.notification) { // Override default HTML alert with native dialog
             window.alert = function (message) {
                 navigator.notification.alert(
