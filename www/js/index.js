@@ -16,9 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+var homeTpl = Handlebars.compile($("#home-tpl").html());
 var app = {
     // Application Constructor
     initialize: function() {
+        app.renderHomeView();
         this.bindEvents();
     },
     // Bind Event Listeners
@@ -33,7 +35,6 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        app.renderHomeView();
         app.receivedEvent('deviceready');
         FastClick.attach(document.body);
         if (navigator.notification) {
@@ -72,6 +73,6 @@ var app = {
             "</div>" +
             "<button type='button' class='help-button' onclick='app.buttonPress()'>Help</button>" +
             "</div>";
-        $('body').html(html);
+        $('body').html(homeTpl());
     }
 };
