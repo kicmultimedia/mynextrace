@@ -16,11 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var homeTpl = Handlebars.compile($("#home-tpl").html());
 var app = {
     // Application Constructor
     initialize: function() {
-        app.renderHomeView();
+        HomeView();
         this.bindEvents();
     },
     // Bind Event Listeners
@@ -41,10 +40,10 @@ var app = {
         // Override default HTML alert with native dialog
             window.alert = function (message) {
                 navigator.notification.alert(
-                    message,    // message
-                    null,       // callback
-                    "Workshop", // title
-                    'OK'        // buttonName
+                    message,        // message
+                    null,           // callback
+                    "My Next Race", // title
+                    'OK'            // buttonName
                 );
             };
         }
@@ -62,17 +61,5 @@ var app = {
     },
     buttonPress: function() {
         alert("Help is on the way....");
-    },
-    renderHomeView: function() {
-        var html =
-            "<div class='app'>" +
-            "<h1>PhoneGap</h1>" +
-            "<div id='deviceready' class='blink'>" +
-            "<p class='event listening'>Connecting to Device</p>" +
-            "<p class='event received'>Device is Ready</p>" +
-            "</div>" +
-            "<button type='button' class='help-button' onclick='app.buttonPress()'>Help</button>" +
-            "</div>";
-        $('body').html(homeTpl());
     }
 };
