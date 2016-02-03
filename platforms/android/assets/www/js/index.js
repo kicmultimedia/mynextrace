@@ -19,10 +19,15 @@
 var app = {
     // Application Constructor
     initialize: function() {
-        app.templates.load("homeScreen").done(function () {
+        app.templates.load("homeScreen", "searchScreen").done(function () {
             app.HomeView();
         });
+        $(window).on('hashchange', this.route);
         this.bindEvents();
+    },
+    route: function () {
+        var hash = window.location.hash;
+        app.renderNextScreen(hash);
     },
     // Bind Event Listeners
     //
@@ -63,5 +68,11 @@ var app = {
     },
     buttonPress: function() {
         alert("Help is on the way....");
+    },
+    renderNextScreen: function(hash) {
+        var templateName = hash.replace('#','');
+        var nextTemplate = new this.templates.get(templateName);
+        console.log("Loading next template: ", templateName);
+        $('body').html(nextTemplate());
     }
 };
