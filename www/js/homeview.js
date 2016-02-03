@@ -1,9 +1,8 @@
-var HomeView = function (service) {
+app.HomeView = function (service) {
 
-    var homeTpl = Handlebars.compile($("#home-tpl").html());
+    var homeTpl = new this.templates.get("homeScreen");
 
     this.initialize = function () {
-        console.log("In HomeView");
         this.render();
     };
 

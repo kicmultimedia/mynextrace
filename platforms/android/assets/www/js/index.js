@@ -19,7 +19,11 @@
 var app = {
     // Application Constructor
     initialize: function() {
-        HomeView();
+        app.templates.load("homeScreen").done(function () {
+            console.log("Home template loaded");
+            console.log(this);
+            app.HomeView();
+        });
         this.bindEvents();
     },
     // Bind Event Listeners

@@ -19,7 +19,9 @@
 var app = {
     // Application Constructor
     initialize: function() {
-        HomeView();
+        app.templates.load("homeScreen").done(function () {
+            app.HomeView();
+        });
         this.bindEvents();
     },
     // Bind Event Listeners
