@@ -20,8 +20,6 @@ var app = {
     // Application Constructor
     initialize: function() {
         app.templates.load("homeScreen").done(function () {
-            console.log("Home template loaded");
-            console.log(this);
             app.HomeView();
         });
         this.bindEvents();
