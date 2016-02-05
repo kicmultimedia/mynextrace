@@ -19,7 +19,7 @@
 var app = {
     // Application Constructor
     initialize: function() {
-        app.templates.load("homeScreen", "searchScreen").done(function () {
+        app.templates.load("homeScreen", "searchScreen", "eventListItem").done(function () {
             app.HomeView();
         });
         $(window).on('hashchange', this.route);
@@ -74,5 +74,12 @@ var app = {
         var nextTemplate = new this.templates.get(templateName);
         console.log("Loading next template: ", templateName);
         $('body').html(nextTemplate());
+        this.getNextView(templateName)
+    },
+    getNextView: function (viewName) {
+        // find object
+        var fn = window[viewName];
+        // is object a function?
+        if (typeof fn === "function") fn();
     }
 };

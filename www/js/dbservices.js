@@ -1,124 +1,176 @@
-var DatabaseService = function () {
+app.productAdapter = (function () {
 
-    this.initialize = function () {
-        var deferred = $.Deferred();
-        this.db = window.openDatabase("conferenceDemoDB", "1.0", "conference Demo DB", 200000);
-        this.db.transaction(
-            function (tx) {
-                createTable(tx);
-                addSampleData(tx);
-            },
-            function (error) {
-                console.log('Transaction error: ' + error);
-                deferred.reject('Transaction error: ' + error);
-            },
-            function () {
-                console.log('Transaction success');
-                deferred.resolve();
+    "use strict";
+
+    var findById = function (id) {
+            var deferred = $.Deferred(),
+                product = null,
+                l = products.length;
+            for (var i = 0; i < l; i++) {
+                if (products[i].id === id) {
+                    product = products[i];
+                    break;
+                }
             }
-        );
-        return deferred.promise();
-    };
+            deferred.resolve(product);
+            return deferred.promise();
+        },
 
-    this.findByName = function (searchKey) {
-        var deferred = $.Deferred();
-        this.db.transaction(
-            function (tx) {
-
-                var sql = "SELECT e.id, e.firstName, e.lastName, e.title, e.description, e.room, e.time, e.twitter_id, e.pic " +
-                    "FROM session e " +
-                    "WHERE e.firstName || ' ' || e.lastName LIKE ? " +
-                    "GROUP BY e.id ORDER BY e.lastName, e.firstName";
-
-                tx.executeSql(sql, ['%' + searchKey + '%'], function (tx, results) {
-                    var len = results.rows.length,
-                        sessions = [],
-                        i = 0;
-                    for (; i < len; i = i + 1) {
-                        sessions[i] = results.rows.item(i);
-                    }
-                    deferred.resolve(sessions);
-                });
-            },
-            function (error) {
-                deferred.reject("Transaction Error: " + error.message);
-            }
-        );
-        return deferred.promise();
-    };
-
-    this.findById = function (id) {
-        var deferred = $.Deferred();
-        this.db.transaction(
-            function (tx) {
-
-                var sql = "SELECT e.id, e.firstName, e.lastName, e.title, e.description, e.room, e.time, e.twitter_id, e.pic " +
-                    "FROM session e " +
-//                    "LEFT JOIN session r ON r.managerId = e.id " +
-//                    "LEFT JOIN session m ON e.managerId = m.id " +
-                    "WHERE e.id=:id";
-
-                tx.executeSql(sql, [id], function (tx, results) {
-                    deferred.resolve(results.rows.length === 1 ? results.rows.item(0) : null);
-                });
-            },
-            function (error) {
-                deferred.reject("Transaction Error: " + error.message);
-            }
-        );
-        return deferred.promise();
-    };
-
-    var createTable = function (tx) {
-        tx.executeSql('DROP TABLE IF EXISTS session');
-        var sql = "CREATE TABLE IF NOT EXISTS session ( " +
-            "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "firstName VARCHAR(50), " +
-            "lastName VARCHAR(50), " +
-            "title VARCHAR(50), " +
-            "description VARCHAR(50), " +
-            "time VARCHAR(50), " +
-            "room VARCHAR(50), " +
-            "twitter_id VARCHAR(50), " +
-            "pic VARCHAR(50))";
-        tx.executeSql(sql, null,
-            function () {
-                console.log('Create table success');
-            },
-            function (tx, error) {
-                alert('Create table error: ' + error.message);
+        findByName = function (searchKey) {
+            var deferred = $.Deferred();
+            var results = products.filter(function (element) {
+                return element.name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
             });
+            deferred.resolve(results);
+            return deferred.promise();
+        },
+
+        products = [
+            {   "id": 1,
+                "name": "Tuareg Summer",
+                "category": "Men's Shorts",
+                "price": "$39.90",
+                "rating": 4,
+                "smallPic": "tuareg_small.jpg",
+                "largePic": "tuareg.jpg",
+                "features": [
+                    "Lightweight, breathable cotton keeps you cool on hot summer days",
+                    "Large pockets secure essentials like your keys and wallet",
+                    "Comes in range of colors",
+                    "Easywash, pre-shrunk and stain-resistant"
+                ]
+            },
+            {   "id": 2,
+                "name": "Nairobi Runners Blue",
+                "category": "Men's Sport Footwear",
+                "price": "$75",
+                "rating": 3,
+                "smallPic": "nairobi_small.jpg",
+                "largePic": "nairobi.jpg",
+                "features": [
+                    "Lightweight upper with mesh windows for ventilation",
+                    "Impacto cushioning system delivers 30% more protection when running on hard surfaces",
+                    "Excellent ankle support",
+                    "Available in a variety of colors"
+                ]
+            },
+            {   "id": 3,
+                "name": "Swim Goggles",
+                "category": "Men's Sport Accessories",
+                "price": "$25",
+                "rating": 5,
+                "smallPic": "goggles_small.jpg",
+                "largePic": "goggles.jpg",
+                "features": [
+                    "Synthetic shell features waterproof, breathable coating; taped critical seams add weather protection",
+                    "Polyester insulation hoards warmth on the inside",
+                    "Integrated hood features removable faux fur trim for a dash of style",
+                    "Stretch inner cuffs with thumbholes add warmth and an extra barrier against snow entry"
+                ]
+            },
+            {   "id": 4,
+                "name": "Interlaken Trek",
+                "category": "Sport Hikers Footwear",
+                "price": "$189.90",
+                "rating": 4,
+                "smallPic": "interlaken_small.jpg",
+                "largePic": "interlaken.jpg",
+                "features": [
+                    "Lightweight upper with mesh windows for ventilation",
+                    "Impacto cushioning system delivers 30% more protection when running on hard surfaces",
+                    "Excellent ankle support",
+                    "Available in a variety of colors"
+                ]
+            },
+            {   "id": 5,
+                "name": "Pufferfish",
+                "category": "Snorkeling Fins",
+                "price": "$25",
+                "rating": 3,
+                "smallPic": "pufferfish_small.jpg",
+                "largePic": "pufferfish.jpg",
+                "features": [
+                    "Wool blend offers natural water repellence in light moisture",
+                    "Polyfill insulation adds extra warmth",
+                    "Lapels can be buttoned up to the neck for added warmth",
+                    "Tailored details include a back dart, bound seams, finished interior and button cuffs"
+                ]
+            },
+            {   "id": 6,
+                "name": "Raja Ampat",
+                "category": "Women's Sunglasses",
+                "price": "$36",
+                "rating": 5,
+                "smallPic": "raja_small.jpg",
+                "largePic": "raja.jpg",
+                "features": [
+                    "Wool blend offers natural water repellence in light moisture",
+                    "Polyfill insulation adds extra warmth",
+                    "Lapels can be buttoned up to the neck for added warmth",
+                    "Tailored details include a back dart, bound seams, finished interior and button cuffs"
+                ]
+            },
+            {   "id": 7,
+                "name": "Mombassa Runners Pink",
+                "category": "Women's Cross-Trainers",
+                "price": "$120",
+                "rating": 2,
+                "smallPic": "mombassa_small.jpg",
+                "largePic": "mombassa.jpg",
+                "features": [
+                    "Extra lateral support",
+                    "Quick fasten velcro",
+                    "Elasticized upper for maximum comfort"
+                ]
+            },
+            {   "id": 8,
+                "name": "Banff Snow",
+                "category": "Ski Boots",
+                "price": "$110",
+                "rating": 4,
+                "smallPic": "banff_small.jpg",
+                "largePic": "banff.jpg",
+                "features": [
+                    "Extra lateral support",
+                    "Quick fasten velcro",
+                    "Elasticized upper for maximum comfort"
+                ]
+            },
+            {   "id": 9,
+                "name": "Corona",
+                "category": "Shorts",
+                "price": "$39",
+                "rating": 4,
+                "smallPic": "corona_small.jpg",
+                "largePic": "corona.jpg",
+                "features": [
+                    "Lightweight peached nylon fabric wicks moisture and dries quickly to keep you comfortable on the go; fabric has a soft, smooth feel",
+                    "With a UPF 50+ rating, fabric provides excellent protection against harmful ultraviolet rays",
+                    "Secure your travel and trail essentials in the 2 side-seam zippered pockets or side cargo pockets"
+                ]
+            },
+            {   "id": 10,
+                "name": "Saskatoon Parka Purple",
+                "category": "Women's Coat",
+                "price": "$299",
+                "rating": 4,
+                "smallPic": "saskatoon_small.jpg",
+                "largePic": "saskatoon.jpg",
+                "features": [
+                    "Storm shell provides wind and rain protection while allowing moisture to escape, keeping you warm and dry",
+                    "High loft goose down provides the best lightweight insulation",
+                    "Fur-lined hood for great protection in high wind conditions",
+                    "Two high hand warmer pockets with fleece lining and two lower fleece lined pockets to keep your hands warm",
+                    "Heavy duty rib knit cuffs and waistband to keep out cold winds and drafts",
+                    "Inset sleeve design for comfort and improved fit"
+                ]
+            }
+        ];
+
+    // The public API
+    return {
+        findById: findById,
+        findByName: findByName
     };
 
-    var addSampleData = function (tx, sessions) {
-
-        var sessions = [
-            { "id":0,"title":"PhoneGap Developer App and the PhoneGap GUI","firstName":"Tim","lastName":"Kim","pic":"timkim.jpeg","time":"9:00am","room":"Ballroom A","twitter_id":"timkim","description":"Developing for PhoneGap just got easier with the newly released PhoneGap GUI that ties in with the PhoneGap Developer App. Learn how to use both to make your PhoneGap development workflow faster and easier than before."},
-            { "id":1,"title":"Enterprise: Not just a dirty word any more","firstName":"Bruce","lastName":"Lefebvre","pic":"bruce_lefebvre.png","time":"11:00am","room":"Ballroom C","twitter_id":"brucelefebvre","description":"This talk will focus on the integration of Adobe Experience Manager (AEM) and PhoneGap, affectionately known as PhoneGap Enterprise. We'll cover why you should care (hint: $) and bring you up to speed on what the platform can do for you and your clients."},
-            { "id":2,"title":"PhoneGap Build: Building without an SDK","firstName":"Brett","lastName":"Rudd","pic":"brettrudd.jpg","time":"2:00pm","room":"Ballroom D","twitter_id":"brettrudd","description":"This presentation will cover the features of the service, focusing on some of our new-ish features such as our oath support, plugins and debugging. There will also be some exclusive sneak peeks of new features revolved around external and private plugins that will hopefully be open for immediate beta testing!  We’ll end on discussing the future and what is on our roadmap in the coming months."},
-            { "id":3,"title":"Many Views: Third Party WebViews on Android","firstName":"Joe","lastName":"Bowser","pic":"joe_bowser.jpg","time":"1:00pm","room":"Ballroom B","twitter_id":"infil00p","description":"Learn about the recent changes in Cordova, and how developers now have the option to use Mozilla's GeckoView in addition to Intel Crosswalk and the default Android WebView on Cordova.  This new feature coming to Cordova on Android finally gives developers a way out of previously irritating bugs that there was no way to work around.  This will go over the ups and downs of developing for different webviews, as well as a demo showing the power of this new feature."},
-            { "id":4,"title":"PhoneGap Enterprise","firstName":"Anis","lastName":"Kadri","pic":"anis.png","time":"10:00am","room":"Ballroom F","twitter_id":"aniskadri","description":"Learn more about PhoneGap enterprise. A new way to create and distribute apps inside your enterprise powered by Adobe Marketing Cloud and Adobe Experience Manager. Find out how you can speed up your development cycles and allow your team members to better collaborate in order to easily create mobile apps."},
-            { "id":5,"title":"Sneak Peek: Adobe Experience Manager and Mobile","firstName":"Anthony","lastName":"Rumsey","pic":"anthony.jpeg","time":"4:45pm","room":"Ballroom A","twitter_id":"planetrumsey","description":"See a sneak peek demo of the new features coming soon to PhoneGap Enterprise and Adobe Experience Manager."},
-            { "id":6,"title":"Workshop: Intro to PhoneGap","firstName":"Michael","lastName":"Brooks","pic":"mwbrooks.jpeg","time":"10:00am","room":"Theater","twitter_id":"mwbrooks","description":"This workshop will provide an introduction to PhoneGap, the philosophy behind it and how to get started quickly using a variety of different tools available. The CLI, PhoneGap Developer App, PhoneGap Build and more will be shown and you will learn about the many frameworks available to choose from when building your mobile apps. You will also be shown debugging techniques and walk away with a solid understanding of what PhoneGap is all about."},
-            { "id":7,"title":"Workshop: Architecting PhoneGap Apps ","firstName":"Christophe","lastName":"Coenraets","pic":"christophe.jpg","time":"1:00pm","room":"Theater","twitter_id":"raymondcamden","description":"Learn how to architect large, complex, and native-like PhoneGap apps using HTML, JavaScript, and CSS. We will investigate mobile challenges and find solutions for them as well as learn all about Single Page Architecture, HTML templates, effective touch events, performance techniques, MVC Frameworks and more."},
-            { "id":8,"title":"Workshop: PhoneGap and Firefox OS","firstName":"Jason","lastName":"Weathersby","pic":"jasonweathersby.jpeg","time":"3:00pm","room":"Theater","twitter_id":"jasonweathersby","description":"We'll begin with the current status of the Firefox OS Cordova integration, including demos of building and debugging basic Cordova Apps using Firefox’s new Web IDE. The rest of the workshop will be hands-on: we'll help you run your app on a Firefox OS device."},
-            { "id":9,"title":"Workshop: Build a PhoneGap App with Ionic+AngularJS","firstName":"Holly","lastName":"Schinsky","pic":"holly.jpg","time":"3:00pm","room":"Theater","twitter_id":"devgirlfl","description":"In this workshop we’ll build a full-blown mobile application from scratch for a real world scenario using PhoneGap and the Ionic+AngularJS framework stack."}
-        ];
-        var l = sessions.length;
-        var sql = "INSERT OR REPLACE INTO session " +
-            "(id, firstName, lastName, title, description, time, room, twitter_id, pic) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        var e;
-        for (var i = 0; i < l; i++) {
-            e = sessions[i];
-            tx.executeSql(sql, [e.id, e.firstName, e.lastName, e.title, e.description, e.time, e.room, e.twitter_id, e.pic],
-                function () {
-                    console.log('INSERT success');
-                },
-                function (tx, error) {
-                    alert('INSERT error: ' + error.message);
-                });
-        }
-    }
-
-};
+}());
