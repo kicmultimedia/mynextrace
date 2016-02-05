@@ -14,10 +14,13 @@ app.EventSearch = function (service) {
     };
 
     this.findByName = function () {
-        console.log("Key entered into field");
-        app.productAdapter.findByName($('.search-key').val()).done(function (events) {
+        var search_field_value = $('.search-key').val();
+        app.productAdapter.findByName(search_field_value).done(function (events) {
             $('.event-list').html(listItemTemplate(events));
         });
+        if (search_field_value == "") {
+            $('.event-list').html("")
+        }
     };
 
     this.initialize();
