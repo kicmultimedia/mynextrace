@@ -1,4 +1,6 @@
-function searchScreen() {
+function searchScreen(templateName) {
+    var nextTemplate = app.templates.get(templateName);
+    $('body').html(nextTemplate());
     $('.search-key').keyup(function() {
         $(this).val(); // get the current value of the input field.
         app.EventSearch()

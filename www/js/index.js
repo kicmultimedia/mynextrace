@@ -19,7 +19,7 @@
 var app = {
     // Application Constructor
     initialize: function() {
-        app.templates.load("homeScreen", "searchScreen", "eventListItem").done(function () {
+        app.templates.load("homeScreen", "searchScreen", "eventListItem", "eventScreen").done(function () {
             app.HomeView();
         });
         $(window).on('hashchange', this.route);
@@ -27,7 +27,7 @@ var app = {
     },
     route: function () {
         var hash = window.location.hash;
-        app.renderNextScreen(hash);
+        app.getViewDetails(hash);
     },
     // Bind Event Listeners
     //
@@ -69,17 +69,21 @@ var app = {
     buttonPress: function() {
         alert("Help is on the way....");
     },
-    renderNextScreen: function(hash) {
+    getViewDetails: function(hash) {
         var templateName = hash.replace('#','');
-        var nextTemplate = new this.templates.get(templateName);
-        console.log("Loading next template: ", templateName);
-        $('body').html(nextTemplate());
-        this.getNextView(templateName)
+        var args = {};
+        var args_index = templateName.search("/");
+        if (args_index !== -1) {
+            templateName = templateName.slice(0, args_index);
+            var id = hash.slice(args_index+2);
+            args["id"] = parseInt(id);
+        }
+        this.getNextView(templateName, args)
     },
-    getNextView: function (viewName) {
+    getNextView: function (viewName, args) {
         // find object
         var fn = window[viewName];
         // is object a function?
-        if (typeof fn === "function") fn();
+        if (typeof fn === "function") fn(viewName, args);
     }
 };
