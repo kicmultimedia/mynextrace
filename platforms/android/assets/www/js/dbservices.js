@@ -1,14 +1,14 @@
-app.productAdapter = (function () {
+app.eventAdapter = (function () {
 
     "use strict";
 
     var findById = function (id) {
             var deferred = $.Deferred(),
                 product = null,
-                l = products.length;
+                l = events.length;
             for (var i = 0; i < l; i++) {
-                if (products[i].id === id) {
-                    product = products[i];
+                if (events[i].id === id) {
+                    product = events[i];
                     break;
                 }
             }
@@ -18,14 +18,14 @@ app.productAdapter = (function () {
 
         findByName = function (searchKey) {
             var deferred = $.Deferred();
-            var results = products.filter(function (element) {
+            var results = events.filter(function (element) {
                 return element.name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
             });
             deferred.resolve(results);
             return deferred.promise();
         },
 
-        products = [
+        events = [
             {   "id": 1,
                 "name": "Tuareg Summer",
                 "category": "Men's Shorts",

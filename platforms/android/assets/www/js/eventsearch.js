@@ -17,7 +17,7 @@ app.EventSearch = function (service) {
 
     this.findByName = function () {
         var search_field_value = $('.search-key').val();
-        app.productAdapter.findByName(search_field_value).done(function (events) {
+        app.eventAdapter.findByName(search_field_value).done(function (events) {
             $('.event-list').html(listItemTemplate(events));
         });
         if (search_field_value == "") {

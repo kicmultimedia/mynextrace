@@ -1,5 +1,5 @@
 function eventScreen(templateName, event_args) {
-    app.productAdapter.findById(event_args.id).done(function(event) {
+    app.eventAdapter.findById(event_args.id).done(function(event) {
         app.EventView(templateName, event)
     });
 }
