@@ -19,7 +19,7 @@
 var app = {
     // Application Constructor
     initialize: function() {
-        app.templates.load("homeScreen", "searchScreen", "eventListItem", "eventScreen").done(function () {
+        app.templates.load("homeScreen", "searchScreen", "eventListItem", "eventScreen", "eventScreen_run").done(function () {
             app.HomeView();
         });
         $(window).on('hashchange', this.route);
@@ -71,16 +71,20 @@ var app = {
     },
     getViewDetails: function(hash) {
         var templateName = hash.replace('#','');
-        var args = {};
-        var args_index = templateName.search("/");
-        if (args_index !== -1) {
-            templateName = templateName.slice(0, args_index);
-            var id = hash.slice(args_index+2);
-            args["id"] = parseInt(id);
-        }
-        this.getNextView(templateName, args)
+        var args = templateName.split("/");
+        //if (args_index !== -1) {
+            //templateName = templateName.slice(0, args_index);
+            //var id = hash.slice(args_index+2);
+            //args["id"] = parseInt(id);
+        //}
+        this.getNextView(args)
     },
-    getNextView: function (viewName, args) {
+    getNextView: function (args) {
+        // Collect the view name we need from the arguments provided
+        var viewName = args[0];
+        // Now that we have the view name, we no longer need it within
+        // the provided arguments, so lets remove it.
+        args.splice(0, 1);
         // find object
         var fn = window[viewName];
         // is object a function?

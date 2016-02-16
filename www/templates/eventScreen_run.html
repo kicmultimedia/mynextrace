@@ -1,0 +1,55 @@
+<div class="topcoat-navigation-bar">
+    <div class="topcoat-navigation-bar__item left quarter">
+        <a class="topcoat-icon-button--quiet back-button" href="#">
+            <span class="topcoat-icon topcoat-icon--back"></span>
+        </a>
+    </div>
+    <div class="topcoat-navigation-bar__item center half">
+        <h1 class="topcoat-navigation-bar__title">Your Event</h1>
+    </div>
+</div>
+
+<div class="page-body scroller">
+    <h1 class="event-name">{{this.name}}</h1>
+    <h2 class="event-distance">{{this.distance}}</h2>
+    <h2 class="event-city">{{this.city}} on {{this.start_time}}</h2>
+
+    <div class="full-event-address">
+        <h3 class="event-address-title">Full Address:</h3>
+        <p>{{this.address_1}},</p>
+        {{#if this.address_2}}
+            <p>{{this.address_2}},</p>
+        {{/if}}
+        {{#if this.address_3}}
+            <p>{{this.address_3}},</p>
+        {{/if}}
+        <p>{{this.city}},</p>
+        <p>{{this.county}},</p>
+        <p>{{this.post_code}}</p>
+        <p>{{this.country}}</p>
+    </div>
+
+    <div class="event-run-details">
+        <h3 class="event-run-details-title">Run Details:</h3>
+        <p>Run date: {{this.date}}</p>
+        <p>Run start time: {{this.start_time}}</p>
+        <p>Run places available: {{this.event_limit}}</p>
+        <p>Run restrictions: {{this.restrictions}}</p>
+    </div>
+
+    <a class="topcoat-icon-button topcoat-button--cta">
+        <span class="topcoat-icon icon-facebook"></span>
+    </a>
+
+    <a class="topcoat-icon-button topcoat-button--cta">
+        <span class="topcoat-icon icon-twitter"></span>
+    </a>
+
+    <h3>Features:</h3>
+    <ul class='feature-list topcoat-list'>
+        {{#features}}
+        <li class="topcoat-list__item">{{this}}</li>
+        {{/features}}
+    </ul>
+
+</div>

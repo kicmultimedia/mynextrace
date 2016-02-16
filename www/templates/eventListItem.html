@@ -1,7 +1,13 @@
 {{#.}}
 <li class="topcoat-list__item">
-    <a href="#eventScreen/{{this.id}}">
+    {{#if this.event_type}}
+        <a href="#eventScreen/run/{{this.id}}">
         <img src="../img/{{this.smallPic}}" />
         <p>{{this.name}}</p><p>{{this.category}}</p><p>{{this.price}}</p><span class="chevron"></span></a>
+    {{else}}
+        <a href="#eventScreen/{{this.id}}">
+        <img src="../img/{{this.smallPic}}" />
+        <p>{{this.name}}</p><p>{{this.category}}</p><p>{{this.price}}</p><span class="chevron"></span></a>
+    {{/if}}
 </li>
 {{/.}}
