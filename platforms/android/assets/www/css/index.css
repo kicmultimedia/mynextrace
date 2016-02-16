@@ -70,8 +70,9 @@ body {
 }
 
 h1 {
-    font-size:24px;
+    font-size:larger;
     font-weight:normal;
+    color: darkblue;
     margin:0px;
     overflow:visible;
     padding:0px;
@@ -173,11 +174,11 @@ a {
 .page-body h1 {
     margin: 0px;
     font: inherit;
-    color: inherit;
+    color: #d9534f;
     background: transparent;
     border: none;
     overflow: hidden;
-    font-size: 1.2rem;
+    font-size: 1.8rem;
     font-weight: 400;
 }
 
@@ -242,6 +243,15 @@ a {
 
 .topcoat-list {
     list-style: none;
+}
+
+.topcoat-navigation-bar__item {
+    background-color: orangered;
+    padding: 10px;
+}
+
+.topcoat-navigation-bar__title {
+    color: #ffffff;
 }
 
 .product-list li {
@@ -330,4 +340,25 @@ h3 {
 .price {
     color: green !important;
     padding-bottom: 14px;
+}
+
+.event-body-content {
+    border: solid firebrick 1px;
+    margin-top: 20px;
+}
+
+.event-detail {
+    padding: 25px 10px 10px 5px;
+}
+
+.event-price-table, th, td {
+    border: solid orangered 1px;
+    font-size: smaller;
+    padding: 5px;
+}
+
+.event-price-table, th, td, .event-price-table-header {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    font-weight: bold;
 }

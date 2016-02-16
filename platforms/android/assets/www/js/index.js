@@ -72,13 +72,6 @@ var app = {
     getViewDetails: function(hash) {
         var templateName = hash.replace('#','');
         var args = templateName.split("/");
-        console.log(args);
-        console.log(args[0]);
-        //if (args_index !== -1) {
-            //templateName = templateName.slice(0, args_index);
-            //var id = hash.slice(args_index+2);
-            //args["id"] = parseInt(id);
-        //}
         this.getNextView(args)
     },
     getNextView: function (args) {
@@ -87,7 +80,6 @@ var app = {
         // Now that we have the view name, we no longer need it within
         // the provided arguments, so lets remove it.
         args.splice(0, 1);
-        console.log("spliced: ", args);
         // find object
         var fn = window[viewName];
         // is object a function?

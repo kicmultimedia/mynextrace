@@ -1,5 +1,4 @@
 function eventScreen(templateName, event_args) {
-    console.log(event_args.length);
     var args_length = event_args.length;
     if (args_length > 1) {
         // If the event arguments has more than one, we
@@ -9,8 +8,6 @@ function eventScreen(templateName, event_args) {
         }
     }
     var event_id = parseInt(event_args[args_length -1]);
-    console.log(event_id);
-    console.log(templateName);
     app.eventAdapter.findById(event_id).done(function(event) {
         app.EventView(templateName, event)
     });
