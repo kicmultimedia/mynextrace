@@ -72,11 +72,6 @@ var app = {
     getViewDetails: function(hash) {
         var templateName = hash.replace('#','');
         var args = templateName.split("/");
-        //if (args_index !== -1) {
-            //templateName = templateName.slice(0, args_index);
-            //var id = hash.slice(args_index+2);
-            //args["id"] = parseInt(id);
-        //}
         this.getNextView(args)
     },
     getNextView: function (args) {
