@@ -25,6 +25,31 @@ app.eventAdapter = (function () {
             return deferred.promise();
         },
 
+        findByCategory = function (event) {
+            var deferred = $.Deferred();
+            var results = events.filter(function (element) {
+                if (element.event_category) {
+                    return element.event_category.toLowerCase().match(event.toLowerCase());
+                }
+            });
+            deferred.resolve(results);
+            return deferred.promise();
+        },
+        findByCategoryAndName = function (event, searchKey) {
+            var deferred = $.Deferred();
+            var results_by_category = events.filter(function (element) {
+                if (element.event_category) {
+                    var events_by_type = element.event_category.toLowerCase().match(event.toLowerCase());
+                    return element.event_category.toLowerCase().match(event.toLowerCase());
+                }
+            });
+            var results = results_by_category.filter(function (element) {
+                return element.name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+            });
+            deferred.resolve(results);
+            return deferred.promise();
+        },
+
         events = [
             {   "id": 1,
                 "name": "Tuareg Summer",
@@ -213,7 +238,9 @@ app.eventAdapter = (function () {
     // The public API
     return {
         findById: findById,
-        findByName: findByName
+        findByName: findByName,
+        findByCategory: findByCategory,
+        findByCategoryAndName: findByCategoryAndName
     };
 
 }());
