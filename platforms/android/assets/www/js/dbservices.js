@@ -2,6 +2,10 @@ app.eventAdapter = (function () {
 
     "use strict";
 
+    var all_events = [];
+    var matched_events = [];
+    var url="http://www.mynextrace.co.uk/load_events.php";
+
     var findById = function (id) {
             var deferred = $.Deferred(),
                 product = null,
@@ -18,10 +22,11 @@ app.eventAdapter = (function () {
 
         findByName = function (searchKey) {
             var deferred = $.Deferred();
-            var results = events.filter(function (element) {
-                return element.name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
-            });
-            deferred.resolve(results);
+            filter_by_name(searchKey);
+            //var results = events.filter(function (element) {
+                //return element.name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+            //});
+            deferred.resolve(matched_events);
             return deferred.promise();
         },
 
@@ -48,6 +53,22 @@ app.eventAdapter = (function () {
             });
             deferred.resolve(results);
             return deferred.promise();
+        },
+
+        get_event_data = function() {
+            $.getJSON(url, function(result){
+                console.log("Result: ", result);
+                all_events = result;
+            });
+            console.log("EVENTS: ", all_events);
+        },
+
+        filter_by_name = function(searchKey) {
+            console.log("All: ", all_events);
+            matched_events = all_events.filter(function (element) {
+                return element.Name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+            });
+            console.log("Match: ", matched_events);
         },
 
         events = [
@@ -240,7 +261,9 @@ app.eventAdapter = (function () {
         findById: findById,
         findByName: findByName,
         findByCategory: findByCategory,
-        findByCategoryAndName: findByCategoryAndName
+        findByCategoryAndName: findByCategoryAndName,
+        getEventData: get_event_data,
+        filterByName: filter_by_name
     };
 
 }());

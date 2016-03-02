@@ -19,6 +19,9 @@
 var app = {
     // Application Constructor
     initialize: function() {
+        // Collects all known event data
+        app.eventAdapter.getEventData();
+        // Loads the required template screens
         app.templates.load("homeScreen", "searchScreen", "eventListItem", "eventScreen", "eventScreen_run").done(function () {
             app.HomeView();
         });
