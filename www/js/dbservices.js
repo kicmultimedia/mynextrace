@@ -30,8 +30,8 @@ app.eventAdapter = (function () {
         findByCategory = function (event) {
             var deferred = $.Deferred();
             var results = events.filter(function (element) {
-                if (element.event_category) {
-                    return element.event_category.toLowerCase().match(event.toLowerCase());
+                if (element.category) {
+                    return element.category.toLowerCase().match(event.toLowerCase());
                 }
             });
             deferred.resolve(results);
@@ -40,9 +40,9 @@ app.eventAdapter = (function () {
         findByCategoryAndName = function (event, searchKey) {
             var deferred = $.Deferred();
             var results_by_category = events.filter(function (element) {
-                if (element.event_category) {
-                    var events_by_type = element.event_category.toLowerCase().match(event.toLowerCase());
-                    return element.event_category.toLowerCase().match(event.toLowerCase());
+                if (element.category) {
+                    var events_by_type = element.category.toLowerCase().match(event.toLowerCase());
+                    return element.category.toLowerCase().match(event.toLowerCase());
                 }
             });
             var results = results_by_category.filter(function (element) {
@@ -60,7 +60,7 @@ app.eventAdapter = (function () {
 
         filter_by_name = function(searchKey) {
             matched_events = all_events.filter(function (element) {
-                return element.Name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+                return element.name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
             });
         },
 
