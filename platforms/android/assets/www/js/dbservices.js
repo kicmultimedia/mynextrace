@@ -23,9 +23,6 @@ app.eventAdapter = (function () {
         findByName = function (searchKey) {
             var deferred = $.Deferred();
             filter_by_name(searchKey);
-            //var results = events.filter(function (element) {
-                //return element.name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
-            //});
             deferred.resolve(matched_events);
             return deferred.promise();
         },
@@ -57,18 +54,14 @@ app.eventAdapter = (function () {
 
         get_event_data = function() {
             $.getJSON(url, function(result){
-                console.log("Result: ", result);
                 all_events = result;
             });
-            console.log("EVENTS: ", all_events);
         },
 
         filter_by_name = function(searchKey) {
-            console.log("All: ", all_events);
             matched_events = all_events.filter(function (element) {
                 return element.Name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
             });
-            console.log("Match: ", matched_events);
         },
 
         events = [
