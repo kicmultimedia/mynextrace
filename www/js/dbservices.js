@@ -9,10 +9,10 @@ app.eventAdapter = (function () {
     var findById = function (id) {
             var deferred = $.Deferred(),
                 product = null,
-                l = events.length;
+                l = all_events.length;
             for (var i = 0; i < l; i++) {
-                if (events[i].id === id) {
-                    product = events[i];
+                if (all_events[i].uuid === id) {
+                    product = all_events[i];
                     break;
                 }
             }

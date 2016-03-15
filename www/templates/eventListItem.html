@@ -1,24 +1,18 @@
 {{#.}}
 <li class="topcoat-list__item">
-    {{#if this.event_category}}
-        <a href="#eventScreen/run/{{this.id}}">
-        <p>{{this.name}}</p><p>{{this.event_category}}</p><p>{{this.distance}}</p><p>{{this.city}}</p><span class="chevron"></span></a>
-        {{#if this.event_type_1}}
-            <img src="../img/{{this.event_type_1}}.png" />
-        {{/if}}
-        {{#if this.event_type_2}}
-            <img src="../img/{{this.event_type_2}}.png" />
-        {{/if}}
-        {{#if this.event_type_3}}
-            <img src="../img/{{this.event_type_3}}.png" />
-        {{/if}}
-        {{#if this.event_type_4}}
-            <img src="../img/{{this.event_type_4}}.png" />
-        {{/if}}
-    {{else}}
-        <a href="#eventScreen/{{this.id}}">
-        <img src="../img/{{this.smallPic}}" />
-        <p>{{this.name}}</p><p>{{this.category}}</p><p>{{this.price}}</p><span class="chevron"></span></a>
+    <a href="#eventScreen/{{this.category}}/{{this.uuid}}">
+    <p>{{this.name}}</p><p>{{this.category}}</p><p>{{this.distance}}</p><p>{{this.city}}</p><span class="chevron"></span></a>
+    {{#if this.event_type_1}}
+        <img src="../img/{{this.event_type_1}}.png" />
+    {{/if}}
+    {{#if this.event_type_2}}
+        <img src="../img/{{this.event_type_2}}.png" />
+    {{/if}}
+    {{#if this.event_type_3}}
+        <img src="../img/{{this.event_type_3}}.png" />
+    {{/if}}
+    {{#if this.event_type_4}}
+        <img src="../img/{{this.event_type_4}}.png" />
     {{/if}}
 </li>
 {{/.}}
