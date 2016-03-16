@@ -1,3 +1,7 @@
+function homeScreen() {
+    app.HomeView();
+}
+
 app.HomeView = function (service) {
 
     var homeTpl = new this.templates.get("homeScreen");
