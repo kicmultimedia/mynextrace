@@ -2,7 +2,7 @@ function searchScreen(templateName, args) {
     var nextTemplate = app.templates.get(templateName);
     $('body').html(nextTemplate());
     if (args.length > 0) {
-        app.EventSearchByCategory(args[0])
+        app.EventSearchByCategory(args[0]);
         $('.search-key').keyup(function() {
             $(this).val(); // get the current value of the input field.
             if ($(this).val() !== "") {
